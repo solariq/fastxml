@@ -21,7 +21,7 @@ public class XmlInstructionImpl extends XmlTagImpl implements XmlInstruction {
     return visitor.visitInstruction(this);
   }
 
-  public XmlTag addChild(CharSequence childText) {
+  public XmlTag addContent(CharSequence childText) {
     throw new RuntimeException("Can't add child to instruction");
   }
 

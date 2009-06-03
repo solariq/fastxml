@@ -18,11 +18,14 @@ public interface XmlTag extends XmlTagChild {
   CharSequence getNamespaceByPrefix(CharSequence prefix);
 
   CharSequence getAttribute(CharSequence name);
+  String getAttributeValue(CharSequence name);
 
   XmlTagChild getFirstChild();
+  XmlTag getChild(CharSequence name);
 
-  void setAttribute(CharSequence name, CharSequence value);
-  XmlTag addChild(CharSequence childText);
+  XmlTag setAttribute(CharSequence name, CharSequence value);
+  XmlTag addContent(CharSequence childText);
+  XmlTag addContent(XmlTagChild childText);
   XmlTag deleteChild(XmlTagChild child);
 
   void processTagsWithName(XmlVisitor visitor, @Nullable CharSequence name, @Nullable CharSequence namespace);
@@ -32,4 +35,5 @@ public interface XmlTag extends XmlTagChild {
   XmlTagChild getLastChild();
 
   CharSequence getChildText();
+  String getTextTrim();
 }

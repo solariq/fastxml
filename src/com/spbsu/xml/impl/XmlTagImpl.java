@@ -57,7 +57,11 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
     return null;
   }
 
-  public void setAttribute(CharSequence name, CharSequence value) {
+  public String getAttributeValue(CharSequence name) {
+    return getAttribute(name).toString();
+  }
+
+  public XmlTag setAttribute(CharSequence name, CharSequence value) {
     parseTopLevelElements();
     for (int i = 0; i < attributes.length; i++) {
       final XmlAttributeImpl attribute = attributes[i];
@@ -70,12 +74,13 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
         }
         else
           getDocument().delete(attribute.getStartOffset() - 1, attribute.getEndOffset());
-        return;
+        return this;
       }
     }
     String text = " " + name + "=\"" + XmlFactory.escape(value) + "\"";
     getDocument().insert(firstChildOffset >= 0 ? firstChildOffset - 1 : getEndOffset() - 2, text);
     dropParsedFlag();
+    return this;
   }
 
   public XmlTagChild getFirstChild() {
@@ -86,7 +91,18 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
     return createChild(this, lexer);
   }
 
-  public XmlTag addChild(CharSequence childText) {
+  public XmlTag getChild(CharSequence name) {
+    XmlTagChild child = getFirstChild();
+    while(child != null) {
+      if(child instanceof XmlTag)
+        if(name.equals(((XmlTag)child).getName()))
+          return (XmlTag) child;
+      child = child.next();
+    }
+    return null;
+  }
+
+  public XmlTag addContent(CharSequence childText) {
     parseTopLevelElements();
     if(firstChildOffset < 0){
       getDocument().replace(getEndOffset() - 2, getEndOffset(), ">" + childText + "</" + getName() + ">");
@@ -101,6 +117,10 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
       firstChildOffset = oldFirstChildOffset;
     }
     return this;
+  }
+
+  public XmlTag addContent(XmlTagChild childText) {
+    return addContent(childText.getText());
   }
 
   public XmlTag deleteChild(XmlTagChild child) {
@@ -155,6 +175,10 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
       child = child.next();
     }
     return buffer;
+  }
+
+  public String getTextTrim() {
+    return getChildText().toString().trim();
   }
 
   public boolean accept(XmlVisitor visitor) {

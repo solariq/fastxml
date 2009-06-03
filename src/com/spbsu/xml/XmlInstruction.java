@@ -11,5 +11,6 @@ public interface XmlInstruction extends XmlTagChild{
   CharSequence getName();
   CharSequence getAttribute(CharSequence name);
 
-  void setAttribute(CharSequence name, CharSequence value);
+  // I was too lazy to split off instruction implementation from tag
+  XmlTag setAttribute(CharSequence name, CharSequence value);
 }
