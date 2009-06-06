@@ -14,7 +14,7 @@ public class XmlFactory {
     return new XmlFileImpl(new XmlDocument(text));
   }
 
-  public static XmlTag createTag(String name) {
+  public static XmlTag createTag(final String name) {
     return parseTextFile("<" + name + "/>").getRootTag();
   }
 
