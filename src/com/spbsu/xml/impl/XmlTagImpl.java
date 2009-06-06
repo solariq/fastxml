@@ -95,7 +95,7 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
     XmlTagChild child = getFirstChild();
     while(child != null) {
       if(child instanceof XmlTag)
-        if(name.equals(((XmlTag)child).getName()))
+        if(((XmlTag) child).getName().equals(name))
           return (XmlTag) child;
       child = child.next();
     }
