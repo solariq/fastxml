@@ -1,10 +1,14 @@
 package com.spbsu.xml.impl;
 
+import com.spbsu.util.CompositeCharSequence;
 import com.spbsu.xml.XmlText;
 import com.spbsu.xml.XmlVisitor;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,28 +36,27 @@ public class XmlTextImpl extends XmlTagChildBase implements XmlText {
   protected void parseTopLevelElementsInner() {
     final XmlLexer lexer = getDocument().getLexer();
     lexer.reset(getStartOffset(), XmlFlexLexer.YYINITIAL);
-    StringBuffer buffer = null;
+    final List<CharSequence> buffer = new LinkedList<CharSequence>();
     int currentType = lexer.getTokenType();
     while(currentType >= 0) {
       if(CONTENTS_FILTER[currentType] != 0){
-        if(buffer != null) buffer.append(lexer.getTokenText().toString());
+        buffer.add(lexer.getTokenText());
       }
       else if(currentType == XmlTokenType.ENTITY_REF || currentType == XmlTokenType.CHAR_ENTITY) {
-        if(buffer == null)
-          buffer = new StringBuffer(getDocument().subSequence(getStartOffset(), lexer.getTokenStart()).toString());
-        buffer.append(XmlTokenType.decodeEntity(lexer.getTokenText()));
+        buffer.add(XmlTokenType.decodeEntity(lexer.getTokenText()));
       }
       else if(currentType != XmlTokenType.CDATA_START &&
               currentType != XmlTokenType.CDATA_END &&
               currentType != XmlTokenType.BAD_CHAR
           )
-        break;
+        break; // skip these symbols
       currentType = lexer.advance();
     }
     endOffset = lexer.getTokenStart();
-    if(buffer != null) value = buffer;
-    else value = getDocument().subSequence(getStartOffset(), getEndOffset());
-    if(value.length() == 0)
-      assert false;
+    if(buffer.size() > 1) value = new CompositeCharSequence(buffer.toArray(new CharSequence[buffer.size()]));
+    else if(buffer.size() == 1) value = buffer.get(0);
+    else value = "";
+//    if(value.length() == 0)
+//      assert false;
   }
 }
