@@ -22,6 +22,6 @@ public class XmlCDATATest extends TestCase {
     final XmlTag tag = rootTag.getChild(TAG);
     final XmlTagChild child = tag.getFirstChild();
     assertTrue(child instanceof XmlText);
-    assertEquals(CONTENT, ((XmlText) child).getValue());
+    assertEquals(((XmlText) child).getValue(), CONTENT);
   }
 }
