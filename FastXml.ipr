@@ -128,6 +128,17 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="https://svn2.xp-dev.com/svn/igorkuralenok-FastXml/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="myVersion" value="124" />
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
@@ -137,11 +148,11 @@
   <component name="libraryTable">
     <library name="Commons">
       <CLASSES>
-        <root url="jar:///Users/igorkuralenok/Projects/commons/bin/commons.jar!/" />
+        <root url="jar:///Users/igorkuralenok/Projects/commons/trunk/bin/commons.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="file:///Users/igorkuralenok/Projects/commons/src" />
+        <root url="file:///Users/igorkuralenok/Projects/commons/trunk/src" />
       </SOURCES>
     </library>
   </component>
