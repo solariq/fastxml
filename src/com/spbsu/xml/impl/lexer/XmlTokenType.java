@@ -1,5 +1,7 @@
 package com.spbsu.xml.impl.lexer;
 
+import com.spbsu.util.CharArrayCharSequence;
+
 import java.util.Vector;
 
 public class XmlTokenType {
@@ -108,6 +110,17 @@ public class XmlTokenType {
     if(tokenText.equals("&gt;")) return ">";
     if(tokenText.equals("&nbsp;")) return " ";
     if(tokenText.equals("&quot;")) return "\"";
+    if(tokenText.subSequence(0,2).equals("&#")) {
+      final CharSequence code = tokenText.subSequence(2, tokenText.length() - 1);
+      if(Character.toLowerCase(code.charAt(0)) == 'x') { // hex
+        return new CharArrayCharSequence(new char[]{
+                (char)Integer.parseInt(code.subSequence(1, code.length()).toString(), 16)
+        }, 0, 1);
+      }
+      else { // dec
+        return new CharArrayCharSequence(new char[]{(char)Integer.parseInt(code.toString())}, 0, 1);
+      }
+    }
     return tokenText;
   }
 
