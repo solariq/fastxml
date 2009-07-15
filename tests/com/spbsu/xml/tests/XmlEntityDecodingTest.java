@@ -19,6 +19,11 @@ public class XmlEntityDecodingTest extends TestCase {
       "&lt;/inner&gt;" +
     "</tag>";
 
+  private static final String XML_W_NUMERIC_ENTITY =
+    "<tag>" +
+      "&#8232;&#8232;" +
+    "</tag>";
+
   public void testDecodeEntity() throws Exception {
     final XmlFile xmlFile = XmlFactory.parseTextFile(XML);
     final String  fastXmlResult = xmlFile.getRootTag().getChildText().toString();
@@ -27,5 +32,9 @@ public class XmlEntityDecodingTest extends TestCase {
     final String domResult = doc.getDocumentElement().getTextContent();
 
     assertEquals(domResult, fastXmlResult);
+  }
+
+  public void testNumericEntity() throws Exception {
+    XmlFactory.parseTextFile(XML_W_NUMERIC_ENTITY).getRootTag().getChildText();
   }
 }
