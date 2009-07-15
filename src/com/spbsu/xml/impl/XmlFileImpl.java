@@ -7,11 +7,8 @@ import com.spbsu.xml.impl.lexer.XmlTokenType;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 10.05.2006
- * Time: 20:47:41
- * To change this template use File | Settings | File Templates.
  */
 public class XmlFileImpl extends XmlElementBase implements XmlFile{
   public static final int[] INSIDE_MASK = XmlTokenType.createMask(XmlTokenType.PI_START, XmlTokenType.TAG_START);

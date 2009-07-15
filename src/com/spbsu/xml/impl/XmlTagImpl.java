@@ -4,9 +4,10 @@ import com.spbsu.xml.*;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
-import com.sun.istack.internal.Nullable;
 
 import java.util.Vector;
+
+import org.jetbrains.annotations.Nullable;
 
 public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
   public static final int[] SKIP_UNTIL_MASK = XmlTokenType.createMask(XmlTokenType.TAG_START,

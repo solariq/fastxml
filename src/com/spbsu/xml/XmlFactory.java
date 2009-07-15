@@ -3,11 +3,8 @@ package com.spbsu.xml;
 import com.spbsu.xml.impl.XmlFileImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 10.05.2006
- * Time: 18:03:11
- * To change this template use File | Settings | File Templates.
  */
 public class XmlFactory {
   public static XmlFile parseTextFile(CharSequence text) {

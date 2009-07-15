@@ -11,11 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 11.05.2006
- * Time: 17:00:44
- * To change this template use File | Settings | File Templates.
  */
 public class XmlTextImpl extends XmlTagChildBase implements XmlText {
   private static final int[] CONTENTS_FILTER = XmlTokenType.createMask(XmlTokenType.WS, XmlTokenType.DATA);

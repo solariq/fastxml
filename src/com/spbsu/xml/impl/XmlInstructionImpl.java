@@ -6,11 +6,8 @@ import com.spbsu.xml.impl.lexer.XmlTokenType;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 10.05.2006
- * Time: 21:41:10
- * To change this template use File | Settings | File Templates.
  */
 public class XmlInstructionImpl extends XmlTagImpl implements XmlInstruction {
   public XmlInstructionImpl(XmlElement parent, int startOffset) {

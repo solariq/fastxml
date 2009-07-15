@@ -6,11 +6,8 @@ import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 10.05.2006
- * Time: 22:07:08
- * To change this template use File | Settings | File Templates.
  */
 public abstract class XmlElementBase implements XmlElement{
   private final XmlElement parent;

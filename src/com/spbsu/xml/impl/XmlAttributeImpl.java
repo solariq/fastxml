@@ -10,11 +10,8 @@ import com.spbsu.util.CharSequenceBase;
 import com.spbsu.util.CompositeCharSequence;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Igor Kuralenok
  * Date: 10.05.2006
- * Time: 22:55:00
- * To change this template use File | Settings | File Templates.
  */
 public class XmlAttributeImpl extends XmlElementBase {
   public static final XmlAttributeImpl[] EMPTY_ARRAY = new XmlAttributeImpl[0];
