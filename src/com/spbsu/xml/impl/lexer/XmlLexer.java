@@ -30,7 +30,11 @@ public class XmlLexer {
     this.tokenType = tokenType;
     if(tokenType == -1) return tokenType;
     //noinspection StatementWithEmptyBody
-    while((nextTokenType = lexer.advance()) == tokenType);
+    while(
+      (nextTokenType = lexer.advance()) == tokenType &&
+        nextTokenType != XmlTokenType.ENTITY_REF &&
+        nextTokenType !=  XmlTokenType.CHAR_ENTITY
+    );
     this.nextTokenType = nextTokenType;
     return tokenType;
   }
