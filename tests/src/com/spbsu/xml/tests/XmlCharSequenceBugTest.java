@@ -1,9 +1,9 @@
 package com.spbsu.xml.tests;
 
+import com.spbsu.commons.text.CharSequenceBase;
 import com.spbsu.xml.XmlFactory;
 import com.spbsu.xml.XmlFile;
 import com.spbsu.xml.XmlTag;
-import com.spbsu.util.CharSequenceBase;
 import junit.framework.TestCase;
 
 /**

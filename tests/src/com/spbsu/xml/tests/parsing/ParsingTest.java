@@ -186,7 +186,81 @@ public class ParsingTest extends TestCase {
       xmlFile.accept(visitor);
       System.out.println("" + visitor.tags + " visited for " + (System.currentTimeMillis() - startTime) + "ms");
     }
+  }
 
+  public void testIncompleteXml1() {
+    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\">");
+    assertNotNull(xmlFile);
+    RuntimeException ex = null;
+    try {
+      xmlFile.accept(new RecursiveXmlVisitor());
+    }
+    catch (RuntimeException e) {
+      ex = e;
+    }
+    assertNotNull(ex);
+    assertEquals("Invalid xml: parsing exception at offset 56\n" +
+            "Unexpected token: <invalid token>", ex.getMessage());
+  }
+
+  public void testIncompleteXml2() {
+    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr");
+    assertNotNull(xmlFile);
+    RuntimeException ex = null;
+    try {
+      xmlFile.accept(new RecursiveXmlVisitor());
+    }
+    catch (RuntimeException e) {
+      ex = e;
+    }
+    assertNotNull(ex);
+    assertEquals("Invalid xml: parsing exception at offset 52\n" +
+                 "Unexpected token: <invalid token> expected EQ", ex.getMessage());
+  }
+
+  public void testIncompleteXml3() {
+    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"");
+    assertNotNull(xmlFile);
+    RuntimeException ex = null;
+    try {
+      xmlFile.accept(new RecursiveXmlVisitor());
+    }
+    catch (RuntimeException e) {
+      ex = e;
+    }
+    assertNotNull(ex);
+    assertEquals("Invalid xml: parsing exception at offset 54\n" +
+                 "Unexpected token: <invalid token>", ex.getMessage());
+  }
+
+  public void testBrokenXml1() {
+    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr</b>");
+    assertNotNull(xmlFile);
+    RuntimeException ex = null;
+    try {
+      xmlFile.accept(new RecursiveXmlVisitor());
+    }
+    catch (RuntimeException e) {
+      ex = e;
+    }
+    assertNotNull(ex);
+    assertEquals("Invalid xml: parsing exception at offset 52\n" +
+                 "Unexpected token: END_TAG_START expected EQ", ex.getMessage());
+  }
+
+  public void testUnmachedTag() {
+    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\"></a></xml>");
+    assertNotNull(xmlFile);
+    RuntimeException ex = null;
+    try {
+      xmlFile.accept(new RecursiveXmlVisitor());
+    }
+    catch (RuntimeException e) {
+      ex = e;
+    }
+    assertNotNull(ex);
+    assertEquals("Invalid xml: parsing exception at offset: 58\n" +
+                 "end tag name (a) does not match start name (b).", ex.getMessage());
   }
 
   private static class PerformanceMeterVisitor extends RecursiveXmlVisitor {

@@ -33,7 +33,7 @@ public class XmlLexer {
     while(
       (nextTokenType = lexer.advance()) == tokenType &&
         nextTokenType != XmlTokenType.ENTITY_REF &&
-        nextTokenType !=  XmlTokenType.CHAR_ENTITY
+        nextTokenType != XmlTokenType.CHAR_ENTITY
     );
     this.nextTokenType = nextTokenType;
     return tokenType;

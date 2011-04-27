@@ -1,9 +1,10 @@
 package com.spbsu.xml;
 
 import com.spbsu.xml.impl.lexer.XmlLexer;
-import com.spbsu.util.CharArrayCharSequence;
-import com.spbsu.util.CharSequenceBase;
-import com.spbsu.util.CompositeCharSequence;
+import com.spbsu.commons.text.CharArrayCharSequence;
+import com.spbsu.commons.text.CharSequenceBase;
+import com.spbsu.commons.text.CompositeCharSequence;
+
 
 public class XmlDocument{
   public static final int MAX_FRAGMENTS_COUNT = 200;

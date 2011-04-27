@@ -1,11 +1,11 @@
 package com.spbsu.xml.impl;
 
-import com.spbsu.util.CompositeCharSequence;
 import com.spbsu.xml.XmlText;
 import com.spbsu.xml.XmlVisitor;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
+import com.spbsu.commons.text.CompositeCharSequence;
 
 import java.util.LinkedList;
 import java.util.List;

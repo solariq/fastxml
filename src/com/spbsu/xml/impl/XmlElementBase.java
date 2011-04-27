@@ -43,9 +43,16 @@ public abstract class XmlElementBase implements XmlElement{
 
   protected void assertTrue(XmlLexer lexer, int tokenType) {
     if (lexer.getTokenType() != tokenType) {
-      throw new RuntimeException("Parsing exception at offset " + lexer.getTokenStart() +
+      throw new RuntimeException("Invalid xml: parsing exception at offset " + lexer.getTokenStart() +
                                  "\nUnexpected token: " + XmlTokenType.getTokenName(lexer.getTokenType()) +
                                  " expected " + XmlTokenType.getTokenName(tokenType) + "");
+    }
+  }
+
+  protected void assertFalse(XmlLexer lexer, int tokenType) {
+    if (lexer.getTokenType() == tokenType) {
+      throw new RuntimeException("Invalid xml: parsing exception at offset " + lexer.getTokenStart() +
+                                 "\nUnexpected token: " + XmlTokenType.getTokenName(lexer.getTokenType()));
     }
   }
 

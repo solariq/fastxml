@@ -4,15 +4,11 @@ import com.spbsu.xml.*;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Vector;
 
-import org.jetbrains.annotations.Nullable;
-
 public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
-  public static final int[] SKIP_UNTIL_MASK = XmlTokenType.createMask(XmlTokenType.TAG_START,
-                                                                      XmlTokenType.END_TAG_START,
-                                                                      XmlTokenType.PI_START);
   private static int[] INSIDE_START_TAG_MASK = XmlTokenType.createMask(new int[]{
           XmlTokenType.NAME,
           XmlTokenType.TAG_END,
@@ -257,8 +253,14 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
       if (balance > 0) lexer.advance();
     }
     endTagStartOffset = lexer.getTokenStart();
-    //noinspection StatementWithEmptyBody
-    while (lexer.advance() != XmlTokenType.TAG_END && lexer.getTokenEnd() >= 0);
+    lexer.advance();
+    assertTrue(lexer, XmlTokenType.NAME);
+    if (!lexer.getTokenText().equals(name))
+      throw new RuntimeException("Invalid xml: parsing exception at offset: " + lexer.getTokenStart() +
+                                 "\nend tag name (" + lexer.getTokenText()
+                                 + ") does not match start name ("+name+").");
+    lexer.advance();
+    assertTrue(lexer, XmlTokenType.TAG_END);
     endOffset = lexer.getTokenEnd();
   }
 

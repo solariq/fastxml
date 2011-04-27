@@ -23,6 +23,7 @@ public abstract class XmlTagChildBase extends XmlElementBase implements XmlTagCh
     lexer.reset(getEndOffset(), XmlFlexLexer.YYINITIAL);
     int tokenType = lexer.getTokenType();
     while(tokenType == XmlTokenType.COMMENT) tokenType = lexer.advance();
+    assertFalse(lexer, -1);
     parent.setLastKnownChildStart(lexer.getTokenStart());
     return XmlTagImpl.createChild((XmlTagImpl) getParent(), lexer);
   }

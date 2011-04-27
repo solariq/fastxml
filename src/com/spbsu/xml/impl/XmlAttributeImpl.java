@@ -6,8 +6,8 @@ import com.spbsu.xml.XmlVisitor;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
-import com.spbsu.util.CharSequenceBase;
-import com.spbsu.util.CompositeCharSequence;
+import com.spbsu.commons.text.CharSequenceBase;
+import com.spbsu.commons.text.CompositeCharSequence;
 
 /**
  * User: Igor Kuralenok
@@ -57,7 +57,7 @@ public class XmlAttributeImpl extends XmlElementBase {
         value = value != null ? new CompositeCharSequence(new CharSequence[]{value, decodedEntity}) : decodedEntity;
       }
       else {
-        assertTrue(lexer, XmlTokenType.BAD_CHAR);
+        assertFalse(lexer, lexer.getTokenType());
         break;
       }
     }

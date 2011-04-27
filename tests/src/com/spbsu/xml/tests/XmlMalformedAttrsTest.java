@@ -1,8 +1,8 @@
 package com.spbsu.xml.tests;
 
-import com.spbsu.xml.XmlFile;
-import com.spbsu.xml.XmlFactory;
 import com.spbsu.xml.RecursiveXmlVisitor;
+import com.spbsu.xml.XmlFactory;
+import com.spbsu.xml.XmlFile;
 import com.spbsu.xml.XmlTag;
 import junit.framework.TestCase;
 
@@ -11,7 +11,7 @@ import junit.framework.TestCase;
  * Date: Jul 30, 2009
  */
 public class XmlMalformedAttrsTest extends TestCase {
-  public void testInfiniteLoops() throws Exception {
+  public void InfiniteLoops() throws Exception {
     String input =
             "<rss>" +
             "<channel>" +

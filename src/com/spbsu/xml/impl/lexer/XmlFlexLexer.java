@@ -2,7 +2,7 @@
 
 package com.spbsu.xml.impl.lexer;
 
-import com.spbsu.util.CharSequenceBase;
+import com.spbsu.commons.text.CharSequenceBase;
 
 
 /**

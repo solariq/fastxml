@@ -1,6 +1,7 @@
 package com.spbsu.xml.impl.lexer;
 
-import com.spbsu.util.CharArrayCharSequence;
+
+import com.spbsu.commons.text.CharArrayCharSequence;
 
 import java.util.Vector;
 
@@ -61,6 +62,32 @@ public class XmlTokenType {
 //  nextToken("LAST");
 
   private static Vector tokenNames;
+
+  static{
+    nextToken("TAG_START");
+    nextToken("EMPTY_TAG_END");
+    nextToken("END_TAG_START");
+    nextToken("TAG_END");
+    nextToken("ATTR_VAL");
+    nextToken("EQ");
+    nextToken("ATTR_VAL_START");
+    nextToken("ATTR_VAL_END");
+    nextToken("PI_START");
+    nextToken("PI_END");
+    nextToken("ENTITY_REF");
+    nextToken("CHAR_ENTITY");
+    nextToken("CDATA_START");
+    nextToken("CDATA_END");
+    nextToken("DOCTYPE_START");
+    nextToken("DOCTYPE_END");
+    nextToken("MARKUP");
+    nextToken("BAD_CHAR");
+    nextToken("WS");
+    nextToken("NAME");
+    nextToken("DATA");
+    nextToken("COMMENT");
+    nextToken("LAST");
+  }
 
   private static int nextToken(String name) {
     if(tokenNames == null) tokenNames = new Vector();
@@ -125,6 +152,8 @@ public class XmlTokenType {
   }
 
   public static String getTokenName(int tokenType) {
-    return (String)tokenNames.elementAt(tokenType);
+    if (tokenType < 0 || tokenType >= tokenNames.size())
+      return "<invalid token>";
+    return (String) tokenNames.elementAt(tokenType);
   }
 }
