@@ -22,9 +22,8 @@ public class DebugUtil {
       final Field field = fields[j];
       try {
         if(field.getInt(null) == i) return field.getName();
-      } catch (IllegalAccessException e) {
-
       }
+      catch (IllegalAccessException ignore) {}
     }
     return null;
   }

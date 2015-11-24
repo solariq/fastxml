@@ -6,6 +6,7 @@ import com.spbsu.xml.XmlTagChild;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * User: Igor Kuralenok
@@ -16,6 +17,7 @@ public abstract class XmlTagChildBase extends XmlElementBase implements XmlTagCh
     super(parent, startOffset);
   }
 
+  @Nullable
   public XmlTagChild next() {
     if(!(getParent() instanceof XmlTag)) return null;
     final XmlTagImpl parent = (XmlTagImpl) getParent();

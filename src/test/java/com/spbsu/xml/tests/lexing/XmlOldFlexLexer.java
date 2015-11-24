@@ -9,6 +9,7 @@ import com.spbsu.xml.impl.lexer.XmlTokenType;
  * on 10.05.06 19:57 from the specification file
  * <tt>XmlFlexLexer.flex</tt>
  */
+@SuppressWarnings("unused")
 public class XmlOldFlexLexer {
  /** initial size of the lookahead buffer */
   private static final int ZZ_BUFFERSIZE = 256;

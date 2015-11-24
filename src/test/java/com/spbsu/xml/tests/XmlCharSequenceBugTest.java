@@ -1,6 +1,6 @@
 package com.spbsu.xml.tests;
 
-import com.spbsu.commons.text.CharSequenceBase;
+import com.spbsu.commons.seq.CharSeqArray;
 import com.spbsu.xml.XmlFactory;
 import com.spbsu.xml.XmlFile;
 import com.spbsu.xml.XmlTag;
@@ -22,12 +22,12 @@ public class XmlCharSequenceBugTest extends TestCase {
   }
 
   public void testGetChildForCharSequenceBase() {
-    final CharSequence childName = CharSequenceBase.create(TAG.toCharArray());
+    final CharSequence childName = new CharSeqArray(TAG.toCharArray());
     getChildImpl(childName);
   }
 
   private static void getChildImpl(final CharSequence childName) {
-    final XmlFile xmlFile = XmlFactory.parseTextFile(TEST_XML);
+    final XmlFile xmlFile = XmlFactory.parseText(TEST_XML);
     final XmlTag rootTag = xmlFile.getRootTag();
     final XmlTag child = rootTag.getChild(childName);
     assertNotNull(child);

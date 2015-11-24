@@ -1,12 +1,12 @@
 package com.spbsu.xml;
 
+import com.spbsu.commons.seq.CharSeq;
+import com.spbsu.commons.seq.CharSeqArray;
+import com.spbsu.commons.seq.CharSeqComposite;
 import com.spbsu.xml.impl.lexer.XmlLexer;
-import com.spbsu.commons.text.CharArrayCharSequence;
-import com.spbsu.commons.text.CharSequenceBase;
-import com.spbsu.commons.text.CompositeCharSequence;
 
 
-public class XmlDocument{
+public class XmlDocument {
   public static final int MAX_FRAGMENTS_COUNT = 200;
 
   private XmlLexer lexer = new XmlLexer(this);
@@ -15,7 +15,7 @@ public class XmlDocument{
   public static long totalCount = 0;
 
   public XmlDocument(CharSequence text) {
-    this.text = CharSequenceBase.createArrayBasedSequence(text);
+    this.text = CharSeq.copy(text);
   }
 
   public XmlLexer getLexer() {
@@ -23,30 +23,28 @@ public class XmlDocument{
   }
 
   public void insert(int offset, CharSequence text) {
-    this.text = new CompositeCharSequence(new CharSequence[]{
-        this.text.subSequence(0, offset),
-        CharSequenceBase.createArrayBasedSequence(text),
-        this.text.subSequence(offset, length())});
+    this.text = new CharSeqComposite(this.text.subSequence(0, offset),
+                                     text,
+                                     this.text.subSequence(offset, length()));
     compact();
   }
 
   public void replace(int start, int end, CharSequence text) {
-    this.text = new CompositeCharSequence(new CharSequence[]{
-        this.text.subSequence(0, start),
-        CharSequenceBase.createArrayBasedSequence(text),
-        this.text.subSequence(end, length())});
+    this.text = new CharSeqComposite(this.text.subSequence(0, start),
+                                     text,
+                                     this.text.subSequence(end, length()));
     compact();
   }
 
   public void delete(int start, int end) {
-    this.text = new CompositeCharSequence(new CharSequence[]{text.subSequence(0, start), text.subSequence(end, length())});
+    this.text = new CharSeqComposite(text.subSequence(0, start), text.subSequence(end, length()));
     compact();
   }
 
   private void compact() {
-    if(text instanceof CompositeCharSequence && ((CompositeCharSequence) text).getFragmentsCount() > MAX_FRAGMENTS_COUNT){
-      final char[] array = ((CompositeCharSequence) text).toCharArray();
-      text = new CharArrayCharSequence(array, 0, array.length);
+    if(text instanceof CharSeqComposite && ((CharSeqComposite) text).fragmentsCount() > MAX_FRAGMENTS_COUNT){
+      final char[] array = ((CharSeqComposite)text).toCharArray();
+      text = new CharSeqArray(array, 0, array.length);
       operationsCount = 0;
     }
   }

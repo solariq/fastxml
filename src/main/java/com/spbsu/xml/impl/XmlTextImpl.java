@@ -1,11 +1,11 @@
 package com.spbsu.xml.impl;
 
+import com.spbsu.commons.seq.CharSeqComposite;
 import com.spbsu.xml.XmlText;
 import com.spbsu.xml.XmlVisitor;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
-import com.spbsu.commons.text.CompositeCharSequence;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class XmlTextImpl extends XmlTagChildBase implements XmlText {
       currentType = lexer.advance();
     }
     endOffset = lexer.getTokenStart();
-    if(buffer.size() > 1) value = new CompositeCharSequence(buffer.toArray(new CharSequence[buffer.size()]));
+    if(buffer.size() > 1) value = new CharSeqComposite(buffer.toArray(new CharSequence[buffer.size()]));
     else if(buffer.size() == 1) value = buffer.get(0);
     else value = "";
 //    if(value.length() == 0)

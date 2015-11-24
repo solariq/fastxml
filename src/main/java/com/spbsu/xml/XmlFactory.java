@@ -7,17 +7,17 @@ import com.spbsu.xml.impl.XmlFileImpl;
  * Date: 10.05.2006
  */
 public class XmlFactory {
-  public static XmlFile parseTextFile(CharSequence text) {
+  public static XmlFile parseText(CharSequence text) {
     return new XmlFileImpl(new XmlDocument(text));
   }
 
   public static XmlTag createTag(final String name) {
-    return parseTextFile("<" + name + "/>").getRootTag();
+    return parseText("<" + name + "/>").getRootTag();
   }
 
   //comm
   public static XmlTag createTag(String name, CharSequence text) {
-    return parseTextFile("<" + name + ">" + escape(text) + "</" + name + ">").getRootTag();
+    return parseText("<" + name + ">" + escape(text) + "</" + name + ">").getRootTag();
   }
 
   public static CharSequence escape(CharSequence text) {

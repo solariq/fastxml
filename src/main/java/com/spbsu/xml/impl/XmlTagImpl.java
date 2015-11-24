@@ -221,7 +221,7 @@ public class XmlTagImpl extends XmlTagChildBase implements XmlTag {
     do{
       tokenType = XmlTokenType.skipTokensByMask(lexer, INSIDE_START_TAG_MASK);
       if(tokenType == XmlTokenType.NAME) {
-        if(attributesV == null) attributesV = new Vector<XmlAttributeImpl>();
+        if(attributesV == null) attributesV = new Vector<>();
         final XmlAttributeImpl attribute = new XmlAttributeImpl(tag, lexer.getTokenStart());
         attribute.parseTopLevelElements();
         attributesV.addElement(attribute);

@@ -12,6 +12,7 @@ import junit.framework.TestCase;
  * Time: 19:15:56
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("Duplicates")
 public class SimpleLexingTest extends TestCase {
   public void testEmpty() throws Exception{
     final XmlLexer lexer = new XmlLexer(new XmlDocument(""));

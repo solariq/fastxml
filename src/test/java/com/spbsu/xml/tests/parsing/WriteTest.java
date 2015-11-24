@@ -8,37 +8,37 @@ import junit.framework.TestCase;
 
 public class WriteTest extends TestCase {
   public void testSetAttribute() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a/>");
     xmlFile.getRootTag().setAttribute("x", "x");
     assertEquals("<a x=\"x\"/>", xmlFile.getDocument().toString());
   }
 
   public void testRemoveAttribute() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a x=\"ss\"/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a x=\"ss\"/>");
     xmlFile.getRootTag().setAttribute("x", null);
     assertEquals("<a/>", xmlFile.getDocument().toString());
   }
 
   public void testReplaceAttribute() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a x=\"ss\"/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a x=\"ss\"/>");
     xmlFile.getRootTag().setAttribute("x", "x");
     assertEquals("<a x=\"x\"/>", xmlFile.getDocument().toString());
   }
 
   public void testAddChildToEmpty() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a/>");
     xmlFile.getRootTag().addContent("<a/>");
     assertEquals("<a><a/></a>", xmlFile.getRootTag().getDocument().toString());
   }
 
   public void testAddChild() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a><b/></a>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a><b/></a>");
     xmlFile.getRootTag().addContent("<a/>");
     assertEquals("<a><b/><a/></a>", xmlFile.getRootTag().getDocument().toString());
   }
 
   public void testDeleteChild() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<a><b/></a>");
+    final XmlFile xmlFile = XmlFactory.parseText("<a><b/></a>");
     xmlFile.getRootTag().deleteChild(xmlFile.getRootTag().getFirstChild());
     assertEquals("<a></a>", xmlFile.getRootTag().getDocument().toString());
   }
@@ -50,7 +50,7 @@ public class WriteTest extends TestCase {
     for(int i = 0; i < 10000; i++) buf.append(base);
     buf.append("</a>");
     long startTime = System.currentTimeMillis();
-    final XmlFile xmlFile = XmlFactory.parseTextFile(buf);
+    final XmlFile xmlFile = XmlFactory.parseText(buf);
     PerformanceMeterVisitor visitor = new PerformanceMeterVisitor();
     xmlFile.accept(visitor);
     System.out.println("" + visitor.tags + " edited for " + (System.currentTimeMillis() - startTime) + "ms");

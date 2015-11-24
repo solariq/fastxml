@@ -1,13 +1,13 @@
 package com.spbsu.xml.impl;
 
+import com.spbsu.commons.seq.CharSeq;
+import com.spbsu.commons.seq.CharSeqComposite;
 import com.spbsu.xml.XmlElement;
 import com.spbsu.xml.XmlTag;
 import com.spbsu.xml.XmlVisitor;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import com.spbsu.xml.impl.lexer.XmlTokenType;
-import com.spbsu.commons.text.CharSequenceBase;
-import com.spbsu.commons.text.CompositeCharSequence;
 
 /**
  * User: Igor Kuralenok
@@ -54,14 +54,14 @@ public class XmlAttributeImpl extends XmlElementBase {
       }
       else if(tokenType == XmlTokenType.CHAR_ENTITY){
         final CharSequence decodedEntity = XmlTokenType.decodeEntity(lexer.getTokenText());
-        value = value != null ? new CompositeCharSequence(new CharSequence[]{value, decodedEntity}) : decodedEntity;
+        value = value != null ? new CharSeqComposite(value, decodedEntity) : decodedEntity;
       }
       else {
         assertFalse(lexer, lexer.getTokenType());
         break;
       }
     }
-    if(value == null) value = CharSequenceBase.EMPTY;
+    if(value == null) value = CharSeq.EMPTY;
     assertTrue(lexer, XmlTokenType.ATTR_VAL_END);
     endOffset = lexer.getTokenEnd();
   }

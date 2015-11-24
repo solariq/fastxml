@@ -17,7 +17,7 @@ public class XmlCDATATest extends TestCase {
     "</test>";
 
   public void testCDATA() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile(TEST_XML);
+    final XmlFile xmlFile = XmlFactory.parseText(TEST_XML);
     final XmlTag rootTag = xmlFile.getRootTag();
     final XmlTag tag = rootTag.getChild(TAG);
     final XmlTagChild child = tag.getFirstChild();

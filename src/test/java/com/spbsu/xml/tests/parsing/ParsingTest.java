@@ -19,16 +19,17 @@ import java.io.StringReader;
  * Time: 20:52:49
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("Duplicates")
 public class ParsingTest extends TestCase {
   public void testEmptyFile() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("");
+    final XmlFile xmlFile = XmlFactory.parseText("");
     assertNotNull(xmlFile);
     assertNull(xmlFile.getXmlDefinition());
     assertNull(xmlFile.getRootTag());
   }
 
   public void testXmlDeclaration() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<?xml version=\"1.0\"?>");
+    final XmlFile xmlFile = XmlFactory.parseText("<?xml version=\"1.0\"?>");
     assertNotNull(xmlFile);
     final XmlInstruction xmlDefinition = xmlFile.getXmlDefinition();
     assertNotNull(xmlDefinition);
@@ -38,7 +39,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testEmptyXmlTag1() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"/>");
     assertNotNull(xmlFile);
     final XmlInstruction xmlDefinition = xmlFile.getXmlDefinition();
     assertNull(xmlDefinition);
@@ -49,7 +50,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testEmptyXmlTag2() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"></xml>");
     assertNotNull(xmlFile);
     final XmlInstruction xmlDefinition = xmlFile.getXmlDefinition();
     assertNull(xmlDefinition);
@@ -60,7 +61,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testCompositeFile() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<?xml version=\"1.0\"?><xml version=\"1.0\"/>");
+    final XmlFile xmlFile = XmlFactory.parseText("<?xml version=\"1.0\"?><xml version=\"1.0\"/>");
     assertNotNull(xmlFile);
     final XmlInstruction xmlDefinition = xmlFile.getXmlDefinition();
     assertNotNull(xmlDefinition);
@@ -73,7 +74,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testCompositeTag1() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a/></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a/></xml>");
     assertNotNull(xmlFile);
     final XmlTag tag = xmlFile.getRootTag();
     assertNotNull(tag);
@@ -84,7 +85,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testCompositeTag2() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a/> </xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a/> </xml>");
     assertNotNull(xmlFile);
     final XmlTag tag = xmlFile.getRootTag();
     assertNotNull(tag);
@@ -95,7 +96,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testCompositeTag3() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a/> <b attr=\"\"/></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a/> <b attr=\"\"/></xml>");
     assertNotNull(xmlFile);
     final XmlTag tag = xmlFile.getRootTag();
     assertNotNull(tag);
@@ -110,7 +111,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testSubTag1() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a><b attr=\"\"/></a></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a><b attr=\"\"/></a></xml>");
     assertNotNull(xmlFile);
     final XmlTag tag = xmlFile.getRootTag();
     assertNotNull(tag);
@@ -124,7 +125,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testComment1() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\"/></a></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\"/></a></xml>");
     assertNotNull(xmlFile);
     final XmlTag tag = xmlFile.getRootTag();
     assertNotNull(tag);
@@ -181,7 +182,7 @@ public class ParsingTest extends TestCase {
 
     {
       long startTime = System.currentTimeMillis();
-      final XmlFile xmlFile = XmlFactory.parseTextFile(buf);
+      final XmlFile xmlFile = XmlFactory.parseText(buf);
       PerformanceMeterVisitor visitor = new PerformanceMeterVisitor();
       xmlFile.accept(visitor);
       System.out.println("" + visitor.tags + " visited for " + (System.currentTimeMillis() - startTime) + "ms");
@@ -189,7 +190,7 @@ public class ParsingTest extends TestCase {
   }
 
   public void testIncompleteXml1() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\">");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\">");
     assertNotNull(xmlFile);
     RuntimeException ex = null;
     try {
@@ -199,12 +200,12 @@ public class ParsingTest extends TestCase {
       ex = e;
     }
     assertNotNull(ex);
-    assertEquals("Invalid xml: parsing exception at offset 56\n" +
+    assertEquals("Invalid xml: parsing exception at offset 50\n" +
             "Unexpected token: <invalid token>", ex.getMessage());
   }
 
   public void testIncompleteXml2() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr");
     assertNotNull(xmlFile);
     RuntimeException ex = null;
     try {
@@ -214,12 +215,12 @@ public class ParsingTest extends TestCase {
       ex = e;
     }
     assertNotNull(ex);
-    assertEquals("Invalid xml: parsing exception at offset 52\n" +
+    assertEquals("Invalid xml: parsing exception at offset 46\n" +
                  "Unexpected token: <invalid token> expected EQ", ex.getMessage());
   }
 
   public void testIncompleteXml3() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"");
     assertNotNull(xmlFile);
     RuntimeException ex = null;
     try {
@@ -229,12 +230,12 @@ public class ParsingTest extends TestCase {
       ex = e;
     }
     assertNotNull(ex);
-    assertEquals("Invalid xml: parsing exception at offset 54\n" +
+    assertEquals("Invalid xml: parsing exception at offset 48\n" +
                  "Unexpected token: <invalid token>", ex.getMessage());
   }
 
   public void testBrokenXml1() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr</b>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr</b>");
     assertNotNull(xmlFile);
     RuntimeException ex = null;
     try {
@@ -244,12 +245,12 @@ public class ParsingTest extends TestCase {
       ex = e;
     }
     assertNotNull(ex);
-    assertEquals("Invalid xml: parsing exception at offset 52\n" +
+    assertEquals("Invalid xml: parsing exception at offset 46\n" +
                  "Unexpected token: END_TAG_START expected EQ", ex.getMessage());
   }
 
   public void testUnmachedTag() {
-    final XmlFile xmlFile = XmlFactory.parseTextFile("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\"></a></xml>");
+    final XmlFile xmlFile = XmlFactory.parseText("<xml version=\"1.0\"><a> <!-- ываыва --> <b attr=\"\"></a></xml>");
     assertNotNull(xmlFile);
     RuntimeException ex = null;
     try {
@@ -259,7 +260,7 @@ public class ParsingTest extends TestCase {
       ex = e;
     }
     assertNotNull(ex);
-    assertEquals("Invalid xml: parsing exception at offset: 58\n" +
+    assertEquals("Invalid xml: parsing exception at offset: 52\n" +
                  "end tag name (a) does not match start name (b).", ex.getMessage());
   }
 

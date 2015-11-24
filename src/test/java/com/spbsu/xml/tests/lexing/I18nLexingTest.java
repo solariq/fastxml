@@ -3,8 +3,8 @@ package com.spbsu.xml.tests.lexing;
 import com.spbsu.xml.XmlDocument;
 import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
-import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,6 +13,7 @@ import junit.framework.TestCase;
  * Time: 10:42:57
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("Duplicates")
 public class I18nLexingTest extends   TestCase {
   public void testChars() throws Exception{
     XmlLexer lexer = new XmlLexer(new XmlDocument("???????????"));

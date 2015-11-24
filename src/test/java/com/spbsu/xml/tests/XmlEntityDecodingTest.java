@@ -5,9 +5,10 @@ import com.spbsu.xml.impl.lexer.XmlFlexLexer;
 import com.spbsu.xml.impl.lexer.XmlLexer;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringBufferInputStream;
+import java.io.StringReader;
 
 /**
  * @author vp
@@ -28,24 +29,24 @@ public class XmlEntityDecodingTest extends TestCase {
   public static final int[] tokenTypes = {0, 19, 3, 11, 11, 2, 19, 3};
 
   public void testDecodeEntity() throws Exception {
-    final XmlFile xmlFile = XmlFactory.parseTextFile(XML);
+    final XmlFile xmlFile = XmlFactory.parseText(XML);
     final String  fastXmlResult = xmlFile.getRootTag().getChildText().toString();
 
-    final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new StringBufferInputStream(XML));
+    final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(XML)));
     final String domResult = doc.getDocumentElement().getTextContent();
 
     assertEquals(domResult, fastXmlResult);
   }
 
   public void testNumericEntity() throws Exception {
-    final XmlTag rootTag = XmlFactory.parseTextFile(XML_W_NUMERIC_ENTITY).getRootTag();
+    final XmlTag rootTag = XmlFactory.parseText(XML_W_NUMERIC_ENTITY).getRootTag();
     final XmlTagChild firstChild = rootTag.getFirstChild();
     assertTrue(firstChild instanceof XmlText);
     final CharSequence value = ((XmlText) firstChild).getValue();
     assertEquals("ߜߜ", value.toString());
     assertEquals("ߜߜ", rootTag.getChildText().toString());
 
-    final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new StringBufferInputStream(XML_W_NUMERIC_ENTITY));
+    final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(XML_W_NUMERIC_ENTITY)));
     final String domResult = doc.getDocumentElement().getTextContent();
     assertEquals(domResult, value.toString());
   }
