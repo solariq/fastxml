@@ -1,8 +1,10 @@
 package com.spbsu.xml.tests.parsing;
 
+import com.spbsu.commons.system.RuntimeUtils;
 import com.spbsu.xml.*;
 import com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -139,17 +141,17 @@ public class ParsingTest extends TestCase {
   }
 
   public void testVisitorPerformance() throws Exception{
-    final String baseStart = "<a s:s=\"&quot;\">";
-    final String baseEnd = "</a>";
+    final String baseStart = "<aaaaaaaa s:s=\"&quot;\">";
+    final String baseEnd = "</aaaaaaaa>";
     final StringBuffer buf = new StringBuffer();
     int tagsCount = 1;
     buf.append("<a xmlns:s=\"xxx\">");
-    for(int j = 0; j < 50; j++){
-      for(int i = 0; i < 20; i++){
+    for(int j = 0; j < 500; j++){
+      for(int i = 0; i < 10; i++){
         buf.append(baseStart);
         tagsCount++;
       }
-      for(int i = 0; i < 20; i++) buf.append(baseEnd);
+      for(int i = 0; i < 10; i++) buf.append(baseEnd);
     }
     buf.append("</a>");
     final String bufStr = buf.toString();
@@ -163,13 +165,14 @@ public class ParsingTest extends TestCase {
 //      domParser.parse(new InputSource(new StringReader(bufStr)));
 //      System.out.println("DOM parsed " + tagsCount + " tags for " + (System.currentTimeMillis() - startTime) + "ms");
     }
-
+    RuntimeUtils.gc();
+    final long saxTime;
     // SAX
     {
-      long startTime = System.currentTimeMillis();
       final SAXParserFactory saxFactory = new SAXParserFactoryImpl();
       saxFactory.setNamespaceAware(true);
       final SAXParser saxParser = saxFactory.newSAXParser();
+      final long startTime = System.nanoTime();
       saxParser.parse(new InputSource(new StringReader(bufStr)), new DefaultHandler(){
         int tags;
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -177,16 +180,20 @@ public class ParsingTest extends TestCase {
           super.startElement(uri, localName, qName, attributes);
         }
       });
-      System.out.println("SAX visited " + tagsCount + " tags for " + (System.currentTimeMillis() - startTime) + "ms");
+      saxTime = System.nanoTime() - startTime;
     }
 
+    RuntimeUtils.gc();
+    final long fastTime;
     {
-      long startTime = System.currentTimeMillis();
       final XmlFile xmlFile = XmlFactory.parseText(buf);
       PerformanceMeterVisitor visitor = new PerformanceMeterVisitor();
+      final long startTime = System.nanoTime();
       xmlFile.accept(visitor);
-      System.out.println("" + visitor.tags + " visited for " + (System.currentTimeMillis() - startTime) + "ms");
+      fastTime = System.nanoTime() - startTime;
     }
+//    System.out.println("SAX: " + saxTime/1_000_000. + "ms Fast: " + fastTime/1_000_000. + "ms");
+    Assert.assertTrue(fastTime < saxTime);
   }
 
   public void testIncompleteXml1() {
