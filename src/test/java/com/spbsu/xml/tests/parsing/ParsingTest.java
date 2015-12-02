@@ -192,7 +192,7 @@ public class ParsingTest extends TestCase {
       xmlFile.accept(visitor);
       fastTime = System.nanoTime() - startTime;
     }
-//    System.out.println("SAX: " + saxTime/1_000_000. + "ms Fast: " + fastTime/1_000_000. + "ms");
+    System.out.println("SAX: " + saxTime/1_000_000. + "ms Fast: " + fastTime/1_000_000. + "ms");
     Assert.assertTrue(fastTime < saxTime);
   }
 
