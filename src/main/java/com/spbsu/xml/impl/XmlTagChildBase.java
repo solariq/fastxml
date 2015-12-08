@@ -19,7 +19,8 @@ public abstract class XmlTagChildBase extends XmlElementBase implements XmlTagCh
 
   @Nullable
   public XmlTagChild next() {
-    if(!(getParent() instanceof XmlTag)) return null;
+    if(!(getParent() instanceof XmlTag))
+      return null;
     final XmlTagImpl parent = (XmlTagImpl) getParent();
     final XmlLexer lexer = parent.getDocument().getLexer();
     lexer.reset(getEndOffset(), XmlFlexLexer.YYINITIAL);
